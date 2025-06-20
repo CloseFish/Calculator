@@ -1,72 +1,71 @@
 import { router } from '@kit.ArkUI';
 
-@Entry
 @Component
 export default struct Sidebar {
-  @State isShow: boolean = false;
+  @State isShow: boolean = true;  // 控制侧边栏显示状态
+  @State isNavigating: boolean = false; // 标记是否正在进行路由跳转
 
-  // 路由跳转函数
+  // 路由跳转函数 - 跳转到标准计算器页面
   navigateToStandard() {
+    this.prepareNavigation();
     router.pushUrl({ url: 'pages/StandardCalculator' });
-    this.isShow = false; // 跳转后隐藏侧边栏
   }
 
-  // 切换侧边栏显示状态
-  toggleSidebar() {
-    this.isShow = !this.isShow;
+  // 路由跳转函数 - 跳转到长度转换器页面
+  navigateToLengthConverter() {
+    this.prepareNavigation();
+    router.pushUrl({ url: 'pages/LengthConverter' });
+  }
+
+  // 准备导航 - 在路由跳转前执行
+  prepareNavigation() {
+    this.isNavigating = true;
+    this.isShow = false; // 立即隐藏侧边栏
   }
 
   build() {
     Column() {
-      // 主界面内容
-      Row() {
-        Button('打开侧边栏')
-          .onClick(() => {
-            this.toggleSidebar();
-          });
-        Text('主界面内容')
-          .fontSize(24);
+      // 仅在isShow为true时渲染侧边栏
+      if (this.isShow) {
+        Column() {
+          Text('计算器')
+            .fontSize(20)
+            .fontWeight(FontWeight.Bold)
+            .margin({ top: 20, bottom: 10 })
+            .width('100%')
+            .textAlign(TextAlign.Start);
+
+          Button('标准')
+            .width('100%')
+            .height(50)
+            .borderRadius(0)
+            .onClick(() => {
+              this.navigateToStandard();
+            });
+
+          Blank().height(20);
+
+          Text('转换器')
+            .fontSize(20)
+            .fontWeight(FontWeight.Bold)
+            .margin({ top: 10, bottom: 10 })
+            .width('100%')
+            .textAlign(TextAlign.Start);
+
+          Button('长度')
+            .width('100%')
+            .height(50)
+            .borderRadius(0)
+            .onClick(() => {
+              this.navigateToLengthConverter();
+            });
+        }
+        .width('50%') // 侧边栏宽度设置为50%
+        .height('100%')
+        .backgroundColor('#f0f0f0')
+        .position({ x: 0 }) // 固定位置在左侧
+        .zIndex(100) // 确保侧边栏在主页面上方
       }
-      .width('100%')
-      .height('100%')
-      .justifyContent(FlexAlign.Center);
-
-      // 侧边栏内容
-      Column() {
-        // 计算器部分
-        Text('计算器')
-          .fontSize(20)
-          .fontWeight(FontWeight.Bold)
-          .margin({ top: 20, bottom: 10 })
-          .width('100%')
-          .textAlign(TextAlign.Start);
-
-        Button('标准')
-          .width('100%')
-          .onClick(() => {
-            this.navigateToStandard();
-          });
-
-        // 添加间距
-        Blank()
-          .height(20);
-
-        // 转换器部分
-        Text('转换器')
-          .fontSize(20)
-          .fontWeight(FontWeight.Bold)
-          .margin({ top: 10, bottom: 10 })
-          .width('100%')
-          .textAlign(TextAlign.Start);
-
-        Button('长度')
-          .width('100%');
-      }
-      .width('50%')
-      .height('100%')
-      .backgroundColor('#f0f0f0')
-      .position({ x: this.isShow ? 0 : -1000 }) // 使用固定值确保侧边栏完全隐藏
-      .zIndex(1000); // 确保侧边栏在最上层
     }
     .width('100%')
     .height('100%')

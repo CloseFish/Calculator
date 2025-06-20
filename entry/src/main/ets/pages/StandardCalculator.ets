@@ -1,3 +1,6 @@
+import { router } from '@kit.ArkUI';
+import Sidebar from './Sidebar';
+
 @Entry
 @Component
 struct StandardCalculator {
@@ -21,6 +24,25 @@ struct StandardCalculator {
 
   build() {
     Column() {
+      // 顶部操作栏 - 添加侧边栏触发按钮
+      Row() {
+        Button('≡')
+          .width(80)
+          .height(40)
+          .backgroundColor('#4CAF50')
+          .onClick(() => {
+            this.showSidebar = !this.showSidebar;
+          })
+        Text(this.process)
+          .fontSize(20)
+          .textAlign(TextAlign.End)
+          .width('100%')
+          .padding(10)
+          .backgroundColor('#ffb8afaf')
+          .height(40)
+          .maxLines(1)
+      }
+      .width('100%')
 
       // 显示过程
       Text(this.process)
@@ -324,6 +346,15 @@ struct StandardCalculator {
       .padding(10)
 
       Text("112200205官瑜")
+
+      // 侧边栏组件 - 悬浮在计算器上方
+      if (this.showSidebar) {
+        Sidebar()
+          .width('50%')
+          .height('100%')
+          .position({ x: 0 })
+          .zIndex(100); // 确保侧边栏在计算器上方
+      }
     }
     .padding(20)
     .width('100%')
