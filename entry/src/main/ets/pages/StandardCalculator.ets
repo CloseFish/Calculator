@@ -27,20 +27,17 @@ struct StandardCalculator {
       // 顶部操作栏 - 添加侧边栏触发按钮
       Row() {
         Button('≡')
-          .width(80)
+          .width(40)
           .height(40)
           .backgroundColor('#4CAF50')
           .onClick(() => {
             this.showSidebar = !this.showSidebar;
           })
-        Text(this.process)
+        Text('标准')
           .fontSize(20)
-          .textAlign(TextAlign.End)
-          .width('100%')
-          .padding(10)
-          .backgroundColor('#ffb8afaf')
-          .height(40)
-          .maxLines(1)
+          .textAlign(TextAlign.Start)
+          .width('flex')
+          .padding({ left: 10 })
       }
       .width('100%')
 
