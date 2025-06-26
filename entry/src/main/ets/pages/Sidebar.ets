@@ -69,6 +69,24 @@ export default struct Sidebar {
           .width('100%')
           .height(50)
           .backgroundColor('#f0f0f0');
+
+        Button('设置')
+          .onClick(() => {
+            this.isShow = false;
+            console.info('[路由] 尝试跳转到设置页面');
+
+            router.pushUrl({ url: 'pages/Settings' })
+              .then(() => {
+                console.info('[路由] ✅ 成功跳转到设置页面');
+              })
+              .catch((error: Error) => {
+                console.error('[路由] ❌ 跳转到设置页面失败:', error);
+              });
+          })
+          .width('100%')
+          .height(50)
+          .backgroundColor('#f0f0f0')
+          .margin({ top: 20 }); // 添加与上方按钮的间距
       }
       .width('50%')
       .height('100%')

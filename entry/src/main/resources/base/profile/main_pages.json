@@ -2,6 +2,7 @@
   "src": [
     "pages/StandardCalculator",
     "pages/LengthConverter",
-    "pages/WeightConverter"
+    "pages/WeightConverter",
+    "pages/Settings"
   ]
 }
