@@ -1,5 +1,7 @@
 {
   "src": [
-    "pages/StandardCalculator"
+    "pages/StandardCalculator",
+    "pages/LengthConverter",
+    "pages/WeightConverter"
   ]
 }

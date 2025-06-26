@@ -344,13 +344,14 @@ struct StandardCalculator {
 
       Text("112200205官瑜")
 
-      // 侧边栏组件 - 悬浮在计算器上方
+      // 侧边栏组件 - 悬浮在上方
       if (this.showSidebar) {
-        Sidebar()
+        // 通过构造函数传递 @Link 绑定的状态
+        Sidebar({ isShow: $showSidebar })
           .width('50%')
           .height('100%')
           .position({ x: 0 })
-          .zIndex(100); // 确保侧边栏在计算器上方
+          .zIndex(100);
       }
     }
     .padding(20)

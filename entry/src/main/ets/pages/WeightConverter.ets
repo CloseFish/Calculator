@@ -1,37 +1,37 @@
 import Sidebar from './Sidebar';
-import { router } from '@kit.ArkUI';
+import { router } from '@kit.ArkUI'; // 统一导入路由模块
 
 @Entry
 @Component
-struct LengthConverter {
+struct WeightConverter {
   @State inputValue: string = '0';
   @State outputValue: string = '0';
-  @State inputUnit: string = '米';
-  @State outputUnit: string = '厘米';
+  @State inputUnit: string = '千克';
+  @State outputUnit: string = '克';
   @State showSidebar: boolean = false; // 控制侧边栏显示的状态
-  @State unitOptions: Array<string> = ['厘米', '米', '公里'];
+  @State unitOptions: Array<string> = ['磅', '千克', '克'];
   @State showInputUnitSelector: boolean = false;
   @State showOutputUnitSelector: boolean = false;
 
-  // 单位转换率
+  // 单位转换率（以克为基准单位）
   conversionRates: Map<string, number> = new Map([
-    ['厘米', 1],
-    ['米', 100],
-    ['公里', 100000]
+    ['克', 1],               // 1克 = 1克
+    ['千克', 1000],          // 1千克 = 1000克
+    ['磅', 453.59237]        // 1磅 ≈ 453.59237克
   ]);
 
   build() {
     Column() {
-      // 顶部操作栏 - 侧边栏触发按钮
+      // 顶部操作栏 - 侧边栏触发按钮（与LengthConverter保持一致的Row布局）
       Row() {
         Button('≡')
           .width(40)
           .height(40)
-          .backgroundColor('#4CAF50')
+          .backgroundColor('#2196F3')
           .onClick(() => {
             this.showSidebar =!this.showSidebar;
           })
-        Text('长度')
+        Text('重量')
           .fontSize(20)
           .textAlign(TextAlign.Start)
           .width('flex')
@@ -51,7 +51,7 @@ struct LengthConverter {
           // 可根据实际需求补充交互逻辑，比如聚焦等
         })
 
-      // 输入单位选择，加深背景色，左对齐
+      // 输入单位选择，加深背景色，左对齐（包裹在Row中，与LengthConverter统一）
       Row() {
         Button(this.inputUnit)
           .width('auto')
@@ -78,7 +78,7 @@ struct LengthConverter {
           // 可根据实际需求补充交互逻辑，比如聚焦等
         })
 
-      // 输出单位选择，加深背景色，左对齐
+      // 输出单位选择，加深背景色，左对齐（包裹在Row中，与LengthConverter统一）
       Row() {
         Button(this.outputUnit)
           .width('auto')
@@ -222,9 +222,8 @@ struct LengthConverter {
       .padding(10)
       .margin({ top: 10 })
 
-      // 侧边栏组件 - 悬浮在上方
+      // 侧边栏组件 - 悬浮在上方（添加@Link状态绑定，与父组件同步）
       if (this.showSidebar) {
-        // 通过构造函数传递 @Link 绑定的状态
         Sidebar({ isShow: $showSidebar })
           .width('50%')
           .height('100%')
@@ -232,7 +231,7 @@ struct LengthConverter {
           .zIndex(100);
       }
 
-      // 输入单位选择器，左对齐调整
+      // 输入单位选择器，左对齐调整（添加alignItems确保左对齐）
       if (this.showInputUnitSelector) {
         Column() {
           ForEach(this.unitOptions, (unit: string) => {
@@ -254,10 +253,10 @@ struct LengthConverter {
         .position({ x: 0, y: 200 })
         .zIndex(200)
         .padding(10)
-        .alignItems(HorizontalAlign.Start)
+        .alignItems(HorizontalAlign.Start) // 与LengthConverter统一左对齐
       }
 
-      // 输出单位选择器，左对齐调整
+      // 输出单位选择器，左对齐调整（添加alignItems确保左对齐）
       if (this.showOutputUnitSelector) {
         Column() {
           ForEach(this.unitOptions, (unit: string) => {
@@ -279,7 +278,7 @@ struct LengthConverter {
         .position({ x: 0, y: 200 })
         .zIndex(200)
         .padding(10)
-        .alignItems(HorizontalAlign.Start)
+        .alignItems(HorizontalAlign.Start) // 与LengthConverter统一左对齐
       }
     }
     .padding(20)
@@ -307,7 +306,8 @@ struct LengthConverter {
     if (Number.isInteger(num)) {
       return num.toString();
     }
-    return num.toFixed(8).replace(/\.?0+$/, '');
+    // 保留6位小数后去除末尾多余的0，兼顾精度与可读性
+    return num.toFixed(6).replace(/\.?0+$/, '');
   }
 
   // 点击数字按钮

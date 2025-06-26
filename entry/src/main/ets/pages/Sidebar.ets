@@ -2,73 +2,77 @@ import { router } from '@kit.ArkUI';
 
 @Component
 export default struct Sidebar {
-  @State isShow: boolean = true;  // 控制侧边栏显示状态
-  @State isNavigating: boolean = false; // 标记是否正在进行路由跳转
-
-  // 路由跳转函数 - 跳转到标准计算器页面
-  navigateToStandard() {
-    this.prepareNavigation();
-    router.pushUrl({ url: 'pages/StandardCalculator' });
-  }
-
-  // 路由跳转函数 - 跳转到长度转换器页面
-  navigateToLengthConverter() {
-    this.prepareNavigation();
-    router.pushUrl({ url: 'pages/LengthConverter' });
-  }
-
-  // 准备导航 - 在路由跳转前执行
-  prepareNavigation() {
-    this.isNavigating = true;
-    this.isShow = false; // 立即隐藏侧边栏
-  }
+  @Link isShow: boolean;
 
   build() {
-    Column() {
-      // 仅在isShow为true时渲染侧边栏
-      if (this.isShow) {
-        Column() {
-          Text('计算器')
-            .fontSize(20)
-            .fontWeight(FontWeight.Bold)
-            .margin({ top: 20, bottom: 10 })
-            .width('100%')
-            .textAlign(TextAlign.Start);
+    if (this.isShow) {
+      Column() {
+        Text('计算器')
+          .fontSize(20)
+          .padding({ left: 15, top: 20, bottom: 10 })
+          .width('100%')
+          .textAlign(TextAlign.Start);
 
-          Button('标准')
-            .width('100%')
-            .height(50)
-            .borderRadius(0)
-            .onClick(() => {
-              this.navigateToStandard();
-            });
+        Button('标准')
+          .onClick(() => {
+            this.isShow = false;
+            console.info('[路由] 尝试跳转到标准计算器页面');
 
-          Blank().height(20);
+            router.pushUrl({ url: 'pages/StandardCalculator' })
+              .then(() => {
+                console.info('[路由] ✅ 成功跳转到标准计算器页面');
+              })
+              .catch((error: Error) => { // 明确指定错误类型为 Error
+                console.error('[路由] ❌ 跳转到标准计算器失败:', error);
+              });
+          })
+          .width('100%')
+          .height(50)
+          .backgroundColor('#f0f0f0');
 
-          Text('转换器')
-            .fontSize(20)
-            .fontWeight(FontWeight.Bold)
-            .margin({ top: 10, bottom: 10 })
-            .width('100%')
-            .textAlign(TextAlign.Start);
+        Text('转换器')
+          .fontSize(20)
+          .padding({ left: 15, top: 20, bottom: 10 })
+          .width('100%')
+          .textAlign(TextAlign.Start);
 
-          Button('长度')
-            .width('100%')
-            .height(50)
-            .borderRadius(0)
-            .onClick(() => {
-              this.navigateToLengthConverter();
-            });
-        }
-        .width('50%') // 侧边栏宽度设置为50%
-        .height('100%')
-        .backgroundColor('#f0f0f0')
-        .position({ x: 0 }) // 固定位置在左侧
-        .zIndex(100) // 确保侧边栏在主页面上方
+        Button('长度')
+          .onClick(() => {
+            this.isShow = false;
+            console.info('[路由] 尝试跳转到长度转换器页面');
+
+            router.pushUrl({ url: 'pages/LengthConverter' })
+              .then(() => {
+                console.info('[路由] ✅ 成功跳转到长度转换器页面');
+              })
+              .catch((error: Error) => { // 明确指定错误类型为 Error
+                console.error('[路由] ❌ 跳转到长度转换器失败:', error);
+              });
+          })
+          .width('100%')
+          .height(50)
+          .backgroundColor('#f0f0f0');
+
+        Button('重量')
+          .onClick(() => {
+            this.isShow = false;
+            console.info('[路由] 尝试跳转到重量转换器页面');
+
+            router.pushUrl({ url: 'pages/WeightConverter' })
+              .then(() => {
+                console.info('[路由] ✅ 成功跳转到重量转换器页面');
+              })
+              .catch((error: Error) => { // 明确指定错误类型为 Error
+                console.error('[路由] ❌ 跳转到重量转换器失败:', error);
+              });
+          })
+          .width('100%')
+          .height(50)
+          .backgroundColor('#f0f0f0');
       }
+      .width('50%')
+      .height('100%')
+      .backgroundColor('#f0f0f0');
     }
-    .width('100%')
-    .height('100%')
-    .backgroundColor('transparent');
   }
 }
