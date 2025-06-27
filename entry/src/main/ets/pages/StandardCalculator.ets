@@ -1,4 +1,3 @@
-import { router } from '@kit.ArkUI';
 import Sidebar from './Sidebar';
 import HistoryPanel from './HistoryPanel';
 import { CalculationHistory } from '../common/utils/types';
@@ -30,29 +29,36 @@ struct StandardCalculator {
     Column() {
       // 顶部操作栏 - 添加侧边栏触发按钮
       Row() {
-        Button('≡')
-          .width(40)
-          .height(40)
-          .backgroundColor('#4CAF50')
-          .onClick(() => {
-            this.showSidebar = !this.showSidebar;
-          })
-        Text('标准')
-          .fontSize(20)
-          .textAlign(TextAlign.Start)
-          .width('flex')
-          .padding({ left: 10 })
+        Row() {
+          Button('≡')
+            .width(40)
+            .height(40)
+            .fontSize(15)
+            .padding(0) // 移除默认内边距
+            .backgroundColor('#2196F3')
+            .onClick(() => {
+              this.showSidebar = !this.showSidebar;
+            })
+          Text('标准')
+            .fontSize(20)
+            .textAlign(TextAlign.Start)
+            .width('flex')
+            .padding({ left: 10 })
+        }
+        .layoutWeight(1)
 
-        Button('📜') // 使用卷轴emoji作为图标
+        Button('⏰') // 使用emoji作为图标
           .width(40)
           .height(40)
-          .margin({ left: 10 })
-          .backgroundColor('#2196F3') // 蓝色区别于侧边栏绿色
+          .fontSize(15)
+          .padding(0) // 移除默认内边距
+          .backgroundColor('#2196F3')
           .onClick(() => {
             this.showHistoryPanel = !this.showHistoryPanel;
           })
       }
       .width('100%')
+      .justifyContent(FlexAlign.SpaceBetween)
 
       // 显示过程
       Text(this.process)
@@ -374,8 +380,8 @@ struct StandardCalculator {
           history: $history
         })
           .width('100%')
-          .height('60%')
-          .position({ x: 0, y: '40%' }) // 定位在屏幕下方60%区域
+          .height('100%')
+          .position({ x: 0, y: 0 })
           .zIndex(100) // 确保悬浮在最上层
           .border({ width: 1, color: '#E0E0E0' })
           .shadow({ radius: 10, color: '#40000000' })
@@ -595,7 +601,7 @@ struct StandardCalculator {
 
     if (!this.isError) {
       this.history.push({
-        process: this.process + ' =',
+        process: this.process,
         result: this.result
       });
     }

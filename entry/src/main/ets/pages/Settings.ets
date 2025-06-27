@@ -26,8 +26,10 @@ struct Settings {
           .onClick(() => router.back())
           .width(40)
           .height(40)
+          .fontSize(15)
+          .padding(0) // 移除默认内边距
           .backgroundColor(this.theme === 'dark' ? ThemeConfig.dark.buttonBg : ThemeConfig.light.buttonBg)
-          .fontColor(this.theme === 'dark' ? ThemeConfig.dark.text : ThemeConfig.light.text)
+          .fontColor(this.theme === 'dark' ? ThemeConfig.light.text : ThemeConfig.dark.text)
 
         Text('设置')
           .fontSize(20)

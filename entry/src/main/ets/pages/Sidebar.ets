@@ -9,11 +9,11 @@ export default struct Sidebar {
       Column() {
         Text('计算器')
           .fontSize(20)
-          .padding({ left: 15, top: 20, bottom: 10 })
+          .padding({ left: 5, top: 20, bottom: 10 })
           .width('100%')
           .textAlign(TextAlign.Start);
 
-        Button('标准')
+        Button('🧮 标准')
           .onClick(() => {
             this.isShow = false;
             console.info('[路由] 尝试跳转到标准计算器页面');
@@ -28,15 +28,16 @@ export default struct Sidebar {
           })
           .width('100%')
           .height(50)
+          .fontColor('#0f0f0f')
           .backgroundColor('#f0f0f0');
 
         Text('转换器')
           .fontSize(20)
-          .padding({ left: 15, top: 20, bottom: 10 })
+          .padding({ left: 5, top: 20, bottom: 10 })
           .width('100%')
           .textAlign(TextAlign.Start);
 
-        Button('长度')
+        Button('📏 长度')
           .onClick(() => {
             this.isShow = false;
             console.info('[路由] 尝试跳转到长度转换器页面');
@@ -51,9 +52,10 @@ export default struct Sidebar {
           })
           .width('100%')
           .height(50)
+          .fontColor('#0f0f0f')
           .backgroundColor('#f0f0f0');
 
-        Button('重量')
+        Button('⚖️ 重量')
           .onClick(() => {
             this.isShow = false;
             console.info('[路由] 尝试跳转到重量转换器页面');
@@ -68,9 +70,10 @@ export default struct Sidebar {
           })
           .width('100%')
           .height(50)
+          .fontColor('#0f0f0f')
           .backgroundColor('#f0f0f0');
 
-        Button('设置')
+        Button('⚙ 设置')
           .onClick(() => {
             this.isShow = false;
             console.info('[路由] 尝试跳转到设置页面');
@@ -85,6 +88,7 @@ export default struct Sidebar {
           })
           .width('100%')
           .height(50)
+          .fontColor('#0f0f0f')
           .backgroundColor('#f0f0f0')
           .margin({ top: 20 }); // 添加与上方按钮的间距
       }

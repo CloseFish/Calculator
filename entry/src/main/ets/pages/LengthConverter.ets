@@ -1,5 +1,4 @@
 import Sidebar from './Sidebar';
-import { router } from '@kit.ArkUI';
 
 @Entry
 @Component
@@ -27,7 +26,9 @@ struct LengthConverter {
         Button('≡')
           .width(40)
           .height(40)
-          .backgroundColor('#4CAF50')
+          .fontSize(15)
+          .padding(0) // 移除默认内边距
+          .backgroundColor('#2196F3')
           .onClick(() => {
             this.showSidebar =!this.showSidebar;
           })

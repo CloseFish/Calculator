@@ -1,5 +1,4 @@
 import Sidebar from './Sidebar';
-import { router } from '@kit.ArkUI'; // 统一导入路由模块
 
 @Entry
 @Component
@@ -27,6 +26,8 @@ struct WeightConverter {
         Button('≡')
           .width(40)
           .height(40)
+          .fontSize(15)
+          .padding(0) // 移除默认内边距
           .backgroundColor('#2196F3')
           .onClick(() => {
             this.showSidebar =!this.showSidebar;

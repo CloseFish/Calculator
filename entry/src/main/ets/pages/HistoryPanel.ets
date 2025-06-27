@@ -35,7 +35,7 @@ export default struct HistoryPanel {
           if (this.history.length === 0) {
             // 空状态
             Column() {
-              Text('暂无计算历史')
+              Text('暂无计算历史。')
                 .margin({ top: 8 })
                 .opacity(0.6)
             }
@@ -45,16 +45,21 @@ export default struct HistoryPanel {
           } else {
             // 历史记录列表
             List() {
-              ForEach(this.history, (item: CalculationHistory, index: number) => {
+              ForEach(this.history.slice().reverse(), (item: CalculationHistory) => {
                 ListItem() {
                   Column() {
+                    // 过程文本右对齐
                     Text(item.process)
                       .fontSize(14)
                       .textAlign(TextAlign.End)
+                      .width('100%')
+
+                    // 结果文本右对齐（更大字号）
                     Text(item.result)
                       .fontSize(18)
                       .margin({ top: 4 })
                       .textAlign(TextAlign.End)
+                      .width('100%')
                   }
                   .width('100%')
                   .padding(12)
@@ -71,10 +76,22 @@ export default struct HistoryPanel {
         .layoutWeight(1)
         .padding(12)
         .backgroundColor('#F7F8FA')
+
+        // 清空按钮（固定在右下角）
+        Button('🗑️') // Unicode垃圾桶符号
+          .width(40)
+          .height(40)
+          .alignSelf(ItemAlign.End)
+          .backgroundColor('#FF5252') // 红色警示色
+          .fontColor(Color.White)
+          .onClick(() => {
+            this.history = []; // 清空历史记录
+          })
+          .opacity(this.history.length > 0 ? 1 : 0) // 无记录时隐藏
       }
       .width('100%')
-      .height('60%')
-      .position({ x: 0, y: '40%' })
+      .height('70%')
+      .position({ x: 0, y: '30%' })
       .backgroundColor('#FFF')
       .border({ width: 1, color: '#EEE' })
       .shadow({ radius: 16, color: '#10000000' })

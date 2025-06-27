@@ -1,5 +1,3 @@
-import { ThemeConfig } from "./config/theme.config";
-
 @Component
 export struct CustomRadio {
   @Prop label: string;
