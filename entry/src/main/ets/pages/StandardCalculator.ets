@@ -1,5 +1,7 @@
 import { router } from '@kit.ArkUI';
 import Sidebar from './Sidebar';
+import HistoryPanel from './HistoryPanel';
+import { CalculationHistory } from '../common/utils/types';
 
 @Entry
 @Component
@@ -21,6 +23,8 @@ struct StandardCalculator {
   @State prevSecondNumber: number = 0; // 保存上一次的第二个操作数
   @State isError: boolean = false; // 记录是否处于错误状态
   @State showSidebar: boolean = false; // 控制侧边栏显示状态
+  @State showHistoryPanel: boolean = false; // 控制历史记录面板显示
+  @State history: CalculationHistory[] = [];
 
   build() {
     Column() {
@@ -38,6 +42,15 @@ struct StandardCalculator {
           .textAlign(TextAlign.Start)
           .width('flex')
           .padding({ left: 10 })
+
+        Button('📜') // 使用卷轴emoji作为图标
+          .width(40)
+          .height(40)
+          .margin({ left: 10 })
+          .backgroundColor('#2196F3') // 蓝色区别于侧边栏绿色
+          .onClick(() => {
+            this.showHistoryPanel = !this.showHistoryPanel;
+          })
       }
       .width('100%')
 
@@ -353,6 +366,20 @@ struct StandardCalculator {
           .position({ x: 0 })
           .zIndex(100);
       }
+
+      // 历史记录面板组件 - 悬浮在下方
+      if (this.showHistoryPanel) {
+        HistoryPanel({
+          isShow: $showHistoryPanel,
+          history: $history
+        })
+          .width('100%')
+          .height('60%')
+          .position({ x: 0, y: '40%' }) // 定位在屏幕下方60%区域
+          .zIndex(100) // 确保悬浮在最上层
+          .border({ width: 1, color: '#E0E0E0' })
+          .shadow({ radius: 10, color: '#40000000' })
+      }
     }
     .padding(20)
     .width('100%')
@@ -564,6 +591,13 @@ struct StandardCalculator {
         this.currentNumber = result.toString();
         this.firstNumber = result;
       }
+    }
+
+    if (!this.isError) {
+      this.history.push({
+        process: this.process + ' =',
+        result: this.result
+      });
     }
 
     this.currentOperator = '';
